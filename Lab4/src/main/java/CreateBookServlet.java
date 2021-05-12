@@ -35,7 +35,7 @@ public class CreateBookServlet extends HttpServlet {
         String img_url = data.get("img_address").getAsString();
         String book_description = data.get("book_description").getAsString();
         String book_country = data.get("book_country").getAsString();
-        String book_date = data.get("book_date").getAsString();
+        int book_date = data.get("book_date").getAsInt();
         BDB bdb = BDB.get_instance();
 
         Booky book = new Booky(book_name, img_url, book_description, book_country, book_date);

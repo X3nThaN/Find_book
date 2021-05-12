@@ -10,8 +10,8 @@ public class BDB {
             "values (?, ?, ?, ?, ?);";
     private static final String SELECT_ALL_BOOKS = "select * from books";
     private static final String URL = "jdbc:mysql://localhost:3306/book_data_base";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static final String USERNAME = "Admin-of-project";
+    private static final String PASSWORD = "find-book-forever";
     private static BDB instance;
     private Connection connection;
 
@@ -42,7 +42,7 @@ public class BDB {
                 String img_url = resultSet.getString("img_url");
                 String book_description = resultSet.getString("book_description");
                 String book_country = resultSet.getString("book_country");
-                String book_date = resultSet.getString("book_date");
+                int book_date = resultSet.getInt("book_date");
 
                 books.add(new Booky(id, book_name, img_url, book_description, book_country, book_date));
             }
@@ -60,7 +60,7 @@ public class BDB {
         preparedStatement.setString(2, book.getImg());
         preparedStatement.setString(3, book.getDescription());
         preparedStatement.setString(4, book.getCountry());
-        preparedStatement.setString(5, book.getYear());
+        preparedStatement.setInt(5, book.getYear());
 
         preparedStatement.executeUpdate();
         preparedStatement = connection.prepareStatement("select max(id) from books");
@@ -89,7 +89,7 @@ public class BDB {
         preparedStatement.setString(2, booky.getImg());
         preparedStatement.setString(3, booky.getDescription());
         preparedStatement.setString(4, booky.getCountry());
-        preparedStatement.setString(5, booky.getYear());
+        preparedStatement.setInt(5, booky.getYear());
         preparedStatement.setInt(6, booky.getId());
         is_edited = preparedStatement.executeUpdate()>0;
         return is_edited;
