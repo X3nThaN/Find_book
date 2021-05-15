@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = "/edit")
+@WebServlet(urlPatterns = "/editBook")
 public class EditBook extends HttpServlet {
 
     @Override
@@ -21,18 +21,21 @@ public class EditBook extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        BDB bdb = BDB.get_instance();
+        DataBase dataBase = DataBase.get_instance();
         JsonObject data = new Gson().fromJson(req.getReader(), JsonObject.class);
         int id = data.get("id").getAsInt();
         String book_name = data.get("book_name").getAsString();
+        String book_author = data.get("book_author").getAsString();
         String img_url = data.get("img_address").getAsString();
+        String book_publishing = data.get("book_publishing").getAsString();
+        String book_genre = data.get("book_publishing").getAsString();
         String book_description = data.get("book_description").getAsString();
         String book_country = data.get("book_country").getAsString();
         int book_date = data.get("book_date").getAsInt();
 
-        Booky book = new Booky(id,book_name, img_url, book_description, book_country, book_date);
+        Booky book = new Booky(id,book_name, book_author, img_url, book_publishing, book_genre, book_description, book_country, book_date);
         try {
-            bdb.editBook(book);
+            dataBase.editBook(book);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
